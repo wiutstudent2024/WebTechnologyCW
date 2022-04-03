@@ -1,0 +1,17 @@
+extends layout.pug
+block Content
+    .tasksContainer 
+        .addContainer 
+            form.addForm(action="/tasks/add", method="post")
+                input.addInput(type="text" name = 'task')
+                button.btnAdd Add task
+        .tasksDue
+            h2 Tasks due
+            .tasksList
+                each task in tasksData
+                    p.taskItem #{task.content}
+                        span.buttons
+                            a.btnEdit(href="/") Edit 
+                            a.btnDelete(href="/") Delete 
+        .tasksCompleted 
+            h2 Completed tasks 
