@@ -108,6 +108,38 @@ app.post(`/tasks/:id/update`, (req, res) => {
   res.redirect('/tasks');
 });
 
+//going to completed page
+app.get('/complete', (req, res) => {
+  db.all('select * from tasks where done=1', [], (err, data) => {
+    if (err) throw err;
+    res.render('complete', { tasks: data });
+  });
+});
+
+// completing a task
+app.get('/tasks/:id/complete', (req, res) => {
+  let id = req.params.id;
+  const complete = 'update tasks set done = 1 where id = ?';
+  db.run(complete, [id], (err) => {
+    if (err) throw err;
+    res.redirect('/tasks');
+  });
+
+  // res.render('tasks', id, (err) => {
+  //   if (err) throw err;
+  // });
+});
+
+// uncompleting a task
+app.get('/tasks/:id/uncomplete', (req, res) => {
+  let id = req.params.id;
+  const unComplete = 'update tasks set done = 0 where id = ?';
+  db.run(unComplete, [id], (err) => {
+    if (err) throw err;
+    res.redirect('/complete');
+  });
+});
+
 //////////////////////////////////////////////////
 // db.run('update tasks set done = 1 where id = 1');
 // db.all('select * from tasks', [], (err, rows) => {
