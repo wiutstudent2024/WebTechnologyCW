@@ -1,10 +1,13 @@
 extends layout.pug 
 block Content
     .tasksDone
-            h2 Tasks completed
-            .tasksList
+        h2 Tasks completed
+        .tasksList
+            if tasks.length
                 each task in tasks
-                    p.taskItem #{task.content}
+                    p.taskItemCtd #{task.content}
                         span.buttons
-                            a.btnDelete(href=`/tasks/${task.id}/deletedone`) Delete
+                            a.btnDeleteCompleted(href=`/tasks/${task.id}/deletedone`) Delete
                             a.btnDone(href=`/tasks/${task.id}/uncomplete`) Undone
+            else
+                p There is no Tasks completed

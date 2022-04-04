@@ -1,10 +1,9 @@
 extends layout
 block Content 
-    .editForm
-        //- form.updateForm(action=`/tasks/${id}/update`) 
-        //-     input.updateInput(type="text" name = "task" value = `${task.content}`)
-        //-     button.btnUpdate UPDATE
+    .updateForm
+        if error 
+            p.error Please fill the form to update it
         form(action = `/tasks/${id}/update`, method="post")
-                .formElement
-                    input(type="text" name='task' value = `${task.content}`)
-                button.btnUpdate Save
+            .formElement
+                input(type="text" name='task' value = `${task.content}` placeholder = "Update task...")
+            button.btnUpdate Save

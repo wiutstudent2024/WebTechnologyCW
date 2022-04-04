@@ -4,13 +4,6 @@ const { json } = require('express/lib/response');
 const app = express();
 const sqlite3 = require('sqlite3').verbose();
 
-// const fs = require('fs');
-// const { format } = require('path');
-// const filePath = './data.json';
-// const { body, validationResult } = require('express-validator');
-
-//connect to sqlite3 database
-// Creating connection with sqlite3 database
 const db = new sqlite3.Database(
   './student.db',
   sqlite3.OPEN_READWRITE,
@@ -39,23 +32,30 @@ app.get('/tasks', (req, res) => {
     if (err) throw err;
     res.render('tasks', { tasks: data });
   });
-
-  // res.render('tasks');
-  // });
 });
 
 // adding a new task
 app.post('/tasks/add', (req, res) => {
   const formData = req.body;
 
-  taskInsert = 'insert into tasks(content, done) values (?, ?)';
-  db.run(taskInsert, [formData.task, '0'], (err) => {
-    if (err) throw err;
+  if (formData.task.length === 0) {
+    db.all('select * from tasks where done = 0', [], (err, data) => {
+      if (err) throw err;
+      res.render('tasks', { tasks: data, error: true });
+    });
+  } else {
+    taskInsert = 'insert into tasks(content, done) values (?, ?)';
+    db.run(taskInsert, [formData.task, '0'], (err) => {
+      if (err) throw err;
 
-    console.log('New task added');
+      console.log('New task added');
 
-    res.redirect('/tasks');
-  });
+      db.all('select * from tasks where done = 0', [], (err, data) => {
+        if (err) throw err;
+        res.render('tasks', { tasks: data, success: true });
+      });
+    });
+  }
 });
 
 // deleting uncompleted task
@@ -65,7 +65,6 @@ app.get('/tasks/:id/deleteundone', (req, res) => {
     if (err) throw err;
     res.redirect('/tasks');
   });
-  // res.render('edit');
 });
 
 // deleting completed task
@@ -85,27 +84,21 @@ app.get('/tasks/:id/update', (req, res) => {
   });
 });
 
-// updating a task
-// app.post('/tasks/:id/update', (req, res) => {
-//   let formData = req.body;
-//   req.params.id;
-//   let update = 'update tasks set content where id = ?';
-//   db.run(update, [id, formData.task], (err) => {
-//     if (err) throw err;
-//   });
-//   res.redirect('/tasks');
-// });
-
 //updating selected student record
 app.post(`/tasks/:id/update`, (req, res) => {
+  id = req.params.id;
   let formData = req.body;
   let update = 'update tasks set content = ? where id = ?';
-
-  db.run(update, [formData.task, req.params.id], (err) => {
-    if (err) throw err;
-  });
-
-  res.redirect('/tasks');
+  if (formData.task.length === 0) {
+    db.get('select * from tasks where id = ?', id, (err, row) => {
+      res.render('edit', { id: id, task: row, error: true });
+    });
+  } else {
+    db.run(update, [formData.task, req.params.id], (err) => {
+      if (err) throw err;
+    });
+    res.redirect('/tasks');
+  }
 });
 
 //going to completed page
@@ -124,10 +117,6 @@ app.get('/tasks/:id/complete', (req, res) => {
     if (err) throw err;
     res.redirect('/tasks');
   });
-
-  // res.render('tasks', id, (err) => {
-  //   if (err) throw err;
-  // });
 });
 
 // uncompleting a task
@@ -139,16 +128,6 @@ app.get('/tasks/:id/uncomplete', (req, res) => {
     res.redirect('/complete');
   });
 });
-
-//////////////////////////////////////////////////
-// db.run('update tasks set done = 1 where id = 1');
-// db.all('select * from tasks', [], (err, rows) => {
-//   if (err) return console.log(err.message);
-
-//   rows.forEach((row) => {
-//     console.log(row);
-//   });
-// });
 
 function id() {
   return '_' + Math.random().toString(36);

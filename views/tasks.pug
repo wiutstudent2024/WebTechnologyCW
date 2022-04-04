@@ -1,33 +1,25 @@
 extends layout.pug
 block Content
     .tasksContainer
-        if success
-            p.success Task added succesfully!
-        .addContainer 
-            //- form.AddForm(action="/add" method="POST")
-            //-     input.userInput(type="text" placeholder="Add you note..." name="note")
-            //-     button.btn Add Note 
+        .addContainer
+            if success 
+                p.success Your task has been added successfully
+            if error 
+                p.error Please Fill the Form
             form.addForm(action="/tasks/add", method="POST")
                 input.addInput(type="text" name = "task")
                 button.btnAdd Add task
         .tasksDue
             h2 Tasks due
             .tasksList
-                //- each note in notes
-                //-     p.taskItem
-                    //-     a.crossed(href=`/${note.id}/crossed`) #{note.desc}
-                    //-     span
-                    //-     a.update(href=`/${note.id}/edit`) Edit
-                    //-     a.delete(href=`/${ note.id }/delete`) Delete
-                    //- else 
-                    //-     a.notcrossed(href=`/${note.id}/crossed`) #{note.desc}
-                    //-     span
-                    //-     a.update(href=`/${note.id}/edit`) Edit
-                    //-     a.delete(href=`/${ note.id }/delete`) Delete
-                each task in tasks
-                    p.taskItem #{task.content}
-                        span.buttons
-                            a.btnEdit(href=`/tasks/${task.id}/update`) Edit 
-                            a.btnDelete(href=`/tasks/${task.id}/deleteundone`) Delete
-                            a.btnDone(href=`/tasks/${task.id}/complete`) Complete
+                if tasks.length 
+                    each task in tasks
+                        p.taskItem #{task.content}
+                            span.buttons
+                                a.btnEdit(href=`/tasks/${task.id}/update`) Edit 
+                                a.btnDelete(href=`/tasks/${task.id}/deleteundone`) Delete
+                                a.btnDone(href=`/tasks/${task.id}/complete`) Complete
+                else
+                    p No Tasks available....
+                
         

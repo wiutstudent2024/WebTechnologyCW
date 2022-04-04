@@ -7,14 +7,12 @@
   font-size: 16px;
   font-family: 'Open Sans', sans-serif;
 }
-
 body {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-
 .container {
   display: flex;
   flex-direction: row;
@@ -47,7 +45,6 @@ body {
   font-weight: 600;
   color: #000;
 }
-
 .homeContainer {
   display: flex;
   align-items: center;
@@ -58,61 +55,45 @@ body {
   height: 30vh;
   border: 2px solid #000;
 }
-
 .introInfo {
   font-size: 2rem;
   color: #000;
   text-align: center;
 }
-
 .addContainer {
-  /* background-color: aqua; */
   margin-top: 20px;
   width: 900px;
-  /* padding: 20px 0; */
 }
-
 .addInput {
   width: 700px;
   height: 40px;
   padding: 0 10px;
-  /* margin: 0 100px 0 0; */
-
   border: 2px solid #000;
 }
-
 .btnAdd {
   padding: 5px;
   width: 150px;
   height: 40px;
   cursor: pointer;
   margin-left: 50px;
-
   border: 2px solid #000;
-  /* margin-right: -20px; */
 }
-
-.taskItem {
+.taskItem,
+.taskItemCtd {
   background-color: #babadc;
   display: flex;
+  width: 900px;
   align-items: center;
   height: 50px;
   border: 2px solid #000;
   margin: 10px 0;
   padding: 0 5px 0 15px;
 }
-
 .buttons {
-  /* background-color: green; */
-  /* padding: 10px; */
-  /* margin-left: 77%; */
   margin: auto;
   margin-right: -1px;
 }
-
-.btnEdit,
-.btnDelete,
-.btnDone {
+.buttons a {
   text-decoration: none;
   text-transform: uppercase;
   font-weight: 600;
@@ -121,64 +102,64 @@ body {
   color: #000;
   padding: 3px 8px;
 }
-
 .btnEdit {
   background-color: #ff0;
   font-size: 1.1rem;
 }
-
-.btnDelete {
+.btnDelete,
+.btnDeleteCompleted {
   background-color: #ff8282;
   font-size: 1.1rem;
-  /* margin-right: -10px; */
 }
 .btnDone {
   background-color: #0f0;
 }
-
 .tasksDue h2,
 .tasksDone h2 {
   margin: 20px 0 10px 0;
   font-size: 1.5rem;
 }
-
-.success {
-  background-color: #0f0;
-  margin-top: 10px;
-  /* color: #000; */
+.success,
+.error {
+  margin: 10px 0;
   font-weight: 600;
   text-align: center;
   font-size: 1.1rem;
   padding: 5px 0;
   border: 2px solid #000;
+  color: #fff;
 }
-
-/* .editForm {
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  background-color: #babadc;
-  margin: 20px;
-  align-items: center;
-} */
+.success {
+  background-color: #0f0;
+  color: #000;
+}
+.error {
+  background-color: #f00;
+}
 .updateForm {
   display: flex;
   flex-direction: column;
   padding: 10px;
   background-color: #babadc;
+  border: 2px solid #000;
   margin: 20px;
   align-items: center;
+  text-align: center;
 }
-.updateInput {
-  width: 900px;
+.updateForm p {
+  width: 880px;
+}
+.formElement input {
+  width: 880px;
+  padding: 0 15px;
   height: 40px;
+  border: 2px solid #000;
 }
-
 .btnUpdate {
-  /* width: 10%; */
   cursor: pointer;
   margin-top: 10px;
   padding: 5px 10px;
   font-weight: 600;
   letter-spacing: 0.5px;
+  border: 2px solid #000;
 }
