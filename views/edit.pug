@@ -1,0 +1,10 @@
+extends layout
+block Content 
+    .editForm
+        //- form.updateForm(action=`/tasks/${id}/update`) 
+        //-     input.updateInput(type="text" name = "task" value = `${task.content}`)
+        //-     button.btnUpdate UPDATE
+        form(action = `/tasks/${id}/update`, method="post")
+                .formElement
+                    input(type="text" name='task' value = `${task.content}`)
+                button.btnUpdate Save

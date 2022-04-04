@@ -1,17 +1,33 @@
 extends layout.pug
 block Content
-    .tasksContainer 
+    .tasksContainer
+        if success
+            p.success Task added succesfully!
         .addContainer 
-            form.addForm(action="/tasks/add", method="post")
-                input.addInput(type="text" name = 'task')
+            //- form.AddForm(action="/add" method="POST")
+            //-     input.userInput(type="text" placeholder="Add you note..." name="note")
+            //-     button.btn Add Note 
+            form.addForm(action="/tasks/add", method="POST")
+                input.addInput(type="text" name = "task")
                 button.btnAdd Add task
         .tasksDue
             h2 Tasks due
             .tasksList
-                each task in tasksData
+                //- each note in notes
+                //-     p.taskItem
+                    //-     a.crossed(href=`/${note.id}/crossed`) #{note.desc}
+                    //-     span
+                    //-     a.update(href=`/${note.id}/edit`) Edit
+                    //-     a.delete(href=`/${ note.id }/delete`) Delete
+                    //- else 
+                    //-     a.notcrossed(href=`/${note.id}/crossed`) #{note.desc}
+                    //-     span
+                    //-     a.update(href=`/${note.id}/edit`) Edit
+                    //-     a.delete(href=`/${ note.id }/delete`) Delete
+                each task in tasks
                     p.taskItem #{task.content}
                         span.buttons
-                            a.btnEdit(href="/") Edit 
-                            a.btnDelete(href="/") Delete 
-        .tasksCompleted 
-            h2 Completed tasks 
+                            a.btnEdit(href=`/tasks/${task.id}/update`) Edit 
+                            a.btnDelete(href=`/tasks/${task.id}/deleteundone`) Delete
+                            a.btnDone(href=`/tasks/${task.id}/complete`) Complete
+        

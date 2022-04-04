@@ -1,0 +1,10 @@
+extends layout.pug 
+block Content
+    .tasksDone
+            h2 Tasks completed
+            .tasksList
+                each task in tasks
+                    p.taskItem #{task.content}
+                        span.buttons
+                            a.btnDelete(href=`/tasks/${task.id}/deletedone`) Delete
+                            a.btnDone(href=`/tasks/${task.id}/uncomplete`) Undone
