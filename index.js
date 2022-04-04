@@ -77,6 +77,37 @@ app.get('/tasks/:id/deletedone', (req, res) => {
   });
 });
 
+// going to edit page
+app.get('/tasks/:id/update', (req, res) => {
+  let id = req.params.id;
+  db.get('select * from tasks where id = ?', id, (err, row) => {
+    res.render('edit', { id: id, task: row });
+  });
+});
+
+// updating a task
+// app.post('/tasks/:id/update', (req, res) => {
+//   let formData = req.body;
+//   req.params.id;
+//   let update = 'update tasks set content where id = ?';
+//   db.run(update, [id, formData.task], (err) => {
+//     if (err) throw err;
+//   });
+//   res.redirect('/tasks');
+// });
+
+//updating selected student record
+app.post(`/tasks/:id/update`, (req, res) => {
+  let formData = req.body;
+  let update = 'update tasks set content = ? where id = ?';
+
+  db.run(update, [formData.task, req.params.id], (err) => {
+    if (err) throw err;
+  });
+
+  res.redirect('/tasks');
+});
+
 //////////////////////////////////////////////////
 // db.run('update tasks set done = 1 where id = 1');
 // db.all('select * from tasks', [], (err, rows) => {
